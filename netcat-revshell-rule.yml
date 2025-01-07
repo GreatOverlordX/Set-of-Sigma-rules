@@ -1,0 +1,24 @@
+title: netcat-revshell
+id: 9942c85a-96b5-4ff0-a80b-bc8bdeb368a8
+status: experimental
+description: Detection of Netcat execution.
+author: gOvX - greatOverlordX
+date: 2025/01/07  # YEAR/MONTH/DAY
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_one:
+    EventID: 1
+
+    Image|endswith: '\nc.exe'
+    CommandLine|contains|all:
+    - ' -e '
+    - ' cmd.exe '
+  selection_two:
+    Hashes|contains: '523613A7B9DFA398CBD5EBD2DD0F4F38' #MD5 hash
+  condition: selection_one or selection_two
+level: high
+tags:
+  - attack.reverse.shell
+  - attack.t1059
