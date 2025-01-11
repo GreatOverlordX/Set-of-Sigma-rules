@@ -1,0 +1,25 @@
+title: AnyDesk Installation
+status: experimental
+description: AnyDesk Remote Desktop installation can be used by attacker to gain remote access.
+date: 2025/01/01  #YYYY/MM/DD
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection:
+    CommandLine|contains|all:
+      - '--install'
+      - '--start-with-win'
+    CurrentDirectory:contains:
+      - 'C:\ProgramData\AnyDesk.exe'
+  condition: selection # Action to be taken
+falsepositives:
+    - Legitimate deployment of AnyDesk
+level: high
+references:
+  - https://twitter.com/theDFIRReport/status/1423361119926816776?s=20
+tags:
+    - attack.command_and_control
+    - attack.t1219  #  Remote Access Software - MITRE ATT&CK - MITRE Technique
+
+

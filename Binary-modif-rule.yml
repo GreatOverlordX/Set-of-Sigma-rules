@@ -1,0 +1,26 @@
+# Service Binary Modification
+
+title: Service Binary Modification
+id: d831c424-9248-4852-baf4-ddbbbe2ccbb1
+status: test
+description: Detection of a Service Binary Modification
+author: gOvX - greatOverlordX
+date: 2025/01/08  # YYYY/MM/DD
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+
+    Image|endswith: '\sc.exe'
+    CommandLine|contains|all:
+    - ' -e '
+    - ' config '
+    - ' binPath= '
+  condition: selection
+level: high
+falsepositives: #None
+tags: 
+  - attack.credentials_access
+  - attack.t1110

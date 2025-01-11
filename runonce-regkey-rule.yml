@@ -1,0 +1,26 @@
+# RunOnce Registry Keys win32 apps | microsoft
+
+title: RunOnce Persistence Rule
+id: eaa5a785-ef51-4f6e-8ebe-7a8dce50d003
+status: testing
+description: Detection of RunOnce Persistance | reg.exe
+author: gOvX - greatOverlordX
+date: 2025/01/08  # YEAR/MONTH/DAY
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  selection:
+    EventID: 1
+    
+    Image|endswith: '\reg.exe'
+    CommandLine|contains|all:
+    - 'reg'
+    - ' add '
+  condition: selection
+
+falsepositives: # NONE
+level: high
+tags:
+  - attack.credentials_access
+  - attack.t1110
