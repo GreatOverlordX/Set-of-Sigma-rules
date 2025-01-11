@@ -1,0 +1,22 @@
+title: Certutil File Ingress Rule
+id: 59d1d9dd-db4c-41f8-9467-74260195b18c
+status: Experimental execution
+description: Detects Certutil Download and execution - CertUtil.exe
+author: gOvX - greatOverlordX
+date: 2025/01/07  # YYYY/MM/DD
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    ParentImage|endswith: '\cmd.exe'
+    CommandLine|contains:
+      - ' -urlcache '
+      - ' -split '
+      - ' -f '
+  condition: selection
+level: high
+tags:
+  - ingress.tool.transfer
+  - attack.t1105

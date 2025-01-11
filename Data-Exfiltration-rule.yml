@@ -1,0 +1,21 @@
+title: Curl Data Exfiltration
+id: 94288ec6-def0-4756-b5f6-d4893dc8b4d7
+status: Testing
+description: Detection of malicious/suspicious curl command line
+date: 2025/01/08   # YEAR/MONTH/DAY
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  selection:
+    EventID: 1
+    Image|endswith: '\curl.exe'
+    CommandLine|contains|all:
+    - 'curl'
+    - ' -d '
+  condition: selection
+falsepositives: # NONE
+level: high
+tags:
+  - attack.credentials_access
+  - attack.t1110

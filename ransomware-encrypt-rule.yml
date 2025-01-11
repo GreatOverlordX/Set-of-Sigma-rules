@@ -1,0 +1,20 @@
+# Sigma Rule for Ransomeware File Encryption
+
+title: Ransomware File Encryption
+id: 902cac24-7ef3-4294-9084-801e1d6804d5
+status: Testing
+description: Detect encryption result of a Ransomware File
+author: gOvX - greatOverlordX
+date: 2025/01/08 # YYYY/MM/DD
+logsource:
+  product: widnows
+  service: process_creation
+detection:
+  selection:
+    EventID: 11
+    TargetFilename: '*.huntme' 
+  condition: selection
+level: high
+tags:
+  - attack.credentials_access
+  - attack.t1110
